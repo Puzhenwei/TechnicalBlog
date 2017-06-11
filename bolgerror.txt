@@ -1,0 +1,5 @@
+git remote add origin git@github.com:yourName/yourRepo.git
+
+instead of
+
+git remote add origin git@github.com:yourOrganizationName/yourGithubProjectName.git

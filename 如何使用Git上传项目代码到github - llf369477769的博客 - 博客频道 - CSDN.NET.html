@@ -1,0 +1,1486 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+
+            <link rel="canonical" href="http://blog.csdn.net/llf369477769/article/details/51917557"/> 
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+       
+    <title>如何使用Git上传项目代码到github - llf369477769的博客
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="github是一个基于git的代码托管平台，付费用户可以建私人仓库，我们一般的免费用户只能使用公共仓库，也就是代码要公开。这对于一般人来说公共仓库就已经足够了。注册账户以及创建仓库要想使用github第一步当然是注册github账号了。之后就可以创建仓库了（免费用户只能建公共仓库），Create a New Repository，填好名称后Creat" />
+
+    <meta name="keywords" content="github" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+                      <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/skin-yellow/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/llf369477769/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>
+       
+
+
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/llf369477769">llf369477769的博客</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/llf369477769?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/llf369477769?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/llf369477769/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "llf369477769";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/llf369477769";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://bss.csdn.net/m/topic/community_IoT/index">
+<font color=red><strong>【CSDN 技术主题月】物联网全栈开发</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href=" http://blog.csdn.net/broadview2006/article/details/72901572">
+<font color=blue><strong>【评论送书】每周荐书：JVM、Nginx、小程序</strong></font></a>
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/72956478">
+<font color=red><strong>CSDN日报20170609 ——《我成为程序员是别无选择，但之后却又别有洞天》</strong></font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8Git%e4%b8%8a%e4%bc%a0%e9%a1%b9%e7%9b%ae%e4%bb%a3%e7%a0%81%e5%88%b0github&u=http://blog.csdn.net/llf369477769/article/details/51917557"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/llf369477769/article/details/51917557">
+        如何使用Git上传项目代码到github            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/github' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">github</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2016-07-15 14:34</span>
+            <span class="link_view" title="阅读次数">5257人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8Git%e4%b8%8a%e4%bc%a0%e9%a1%b9%e7%9b%ae%e4%bb%a3%e7%a0%81%e5%88%b0github','51917557');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(51917557,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<span style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(64,64,64)">github是一个基于git的代码托管平台，付费用户可以建私人仓库，我们一般的免费用户只能使用公共仓库，也就是代码要公开。这对于一般人来说公共仓库就已经足够了。</span></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18421136f1a3134980.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+注册账户以及创建仓库</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+要想使用github第一步当然是注册github账号了。之后就可以创建仓库了（免费用户只能建公共仓库），Create a New Repository，填好名称后Create，之后会出现一些仓库的配置信息，这也是一个git的简单教程。步骤如下：<br style="">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+打开<a target="_blank" target="_blank" href="https://github.com/" style="color:rgb(51,122,183); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; background-color:transparent">https://github.com</a>&nbsp;直接在首页上注册<br style="">
+<br style="">
+<a target="_blank" target="_blank" href="http://1ke.co/files/course/2015/06-10/170548c27e1b854772.png?4.9.3" style="color:rgb(51,122,183); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; background-color:transparent"><img alt="" src="http://1ke.co/files/course/2015/06-10/170548c27e1b854772.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+点按钮注册成功之后，在页面上方用户菜单上选择 “&#43;”-&gt;New repository&nbsp;创建一个新的仓库<br style="">
+<br style="">
+<a target="_blank" target="_blank" href="http://1ke.co/files/course/2015/06-10/17095640f213924273.png?4.9.3" style="color:rgb(51,122,183); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; background-color:transparent"><img alt="" src="http://1ke.co/files/course/2015/06-10/17095640f213924273.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+为仓库取一个名字，点击创建仓库按钮 你将成功创建一个仓库<br style="">
+<br style="">
+<a target="_blank" target="_blank" href="http://1ke.co/files/course/2015/06-10/17132882066d167248.png?4.9.3" style="color:rgb(51,122,183); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; background-color:transparent"><img alt="" src="http://1ke.co/files/course/2015/06-10/17132882066d167248.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+安装git客户端</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+github是服务端，要想在自己电脑上使用git我们还需要一个git客户端，</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+windows用户请下载&nbsp;<a target="_blank" target="_blank" href="http://msysgit.github.com/" style="color:rgb(0,95,169); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:22.4px; font-family:inherit; margin:0px; background-color:transparent">http://msysgit.github.com/</a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+mac用户请下载&nbsp;<a target="_blank" target="_blank" href="http://code.google.com/p/tortoisegit/" style="color:rgb(0,95,169); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:22.4px; font-family:inherit; margin:0px; background-color:transparent">http://code.google.com/p/tortoisegit/</a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+一路next，安装成功后， 回到C盘，或任何文件夹下，点鼠标右键会多出一些菜单<br style="">
+如 Git Init Hear、Git Bash、Git Gui ， 说明安装成功。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+配置Git</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+我们先在电脑硬盘里找一块地方存放本地仓库，比如我们把本地仓库建立在C:\MyRepository\1ke_test文件夹下</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+进入1ke_test文件夹 鼠标右键操作如下步骤：</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+1）在本地仓库里右键选择Git Init Here，会多出来一个.git文件夹，这就表示本地git创建成功。右键Git Bash进入git命令行，截图效果如下：</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/175108c483fb671945.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+为了保险起见，我们先执行git init命令</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ git init</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18283539cfad664272.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<div style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">
+&nbsp;</div>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+为了把本地的仓库传到github，还需要配置ssh key。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+2）在本地创建ssh key</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ ssh-keygen -t rsa -C <span class="hljs-string" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,0,0)">&quot;your_email@youremail.com&quot;</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+后面的your_email@youremail.com改为你的邮箱。我的邮箱是lilu@1ke.co，也是在github上注册的那个邮箱：</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18094049ed5a347715.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+直接点回车，说明会在默认文件id_rsa上生成ssh key。&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+然后系统要求输入密码，直接按回车表示不设密码<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/17570733fea2742062.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+重复密码时也是直接回车，之后提示你shh key已经生成成功。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/1811142d4ce9788031.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+然后我们进入提示的地址下查看ssh key文件。 我的电脑的地址是C:\Users\<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">lilu</span>\.ssh ，其中lilu是我的电脑的名称<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18003428276f033698.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+打开id_rsa.pub，复制里面的key。里面的key是一对看不懂的字符数字组合，不用管它，直接复制。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+回到github网站，进入Account Settings，左边选择SSH Keys，Add SSH Key,</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<a target="_blank" target="_blank" href="http://1ke.co/files/course/2015/06-10/18040663f13e163573.png?4.9.3" style="color:rgb(51,122,183); text-decoration:none; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; background-color:transparent"><img alt="" src="http://1ke.co/files/course/2015/06-10/18040663f13e163573.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+title随便填，粘贴key。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18124918c556633334.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+3）验证是否成功，在git bash下输入</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ ssh -T git@github.com</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+回车就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/18141358d223257547.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+4）接下来我们要做的就是把本地仓库传到github上去，在此之前还需要设置username和email，因为github每次commit都会记录他们</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ git config --global user.name <span class="hljs-string" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,0,0)">&quot;your name&quot;</span>
+$ git config --global user.email <span class="hljs-string" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,0,0)">&quot;your_email@youremail.com&quot;</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+分别输入上述命令行 回车， 我的界面显示如下<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/1816524de546595658.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+5）进入要上传的仓库，右键git bash，添加远程地址</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ git remote add origin git@github.com:yourName/yourRepo.git</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+后面的yourName和yourRepo表示你再github的用户名和刚才新建的仓库，加完之后进入.git，打开config，这里会多出一个remote “origin”内容，这就是刚才添加的远程地址，也可以直接修改config来配置远程地址。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/1821542ecfe9083022.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+与github上的对应<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/1823037aa1ed043887.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+提交上传</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+1）接下来在本地仓库里添加一些文件，比如README</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+在本地新建一个README文件<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/183003b8e527974368.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+然后在命令行输入一下命令</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ git add README
+
+$ git commit -m <span class="hljs-string" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,0,0)">&quot;first commit&quot;</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+我的执行界面如下<br style="">
+<img alt="" src="http://1ke.co/files/course/2015/06-10/183203309ad2517953.png?4.9.3" style="border:0px; vertical-align:middle; max-width:100%; padding:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit"></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+2）上传到github&nbsp;</p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">$ git push origin master</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+git push命令会将本地仓库推送到远程服务器。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+git pull命令则相反。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+注：首次提交，先git pull下，修改完代码后，使用git status可以查看文件的差别，使用git add 添加要commit的文件。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+&nbsp;</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+大功告成，现在你知道如何将本地的项目提交到github上了。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+gitignore文件</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<span style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">.gitignore顾名思义就是告诉git需要忽略的文件，这是一个很重要并且很实用的文件。一般我们写完代码后会执行编译、调试等操作，这期间会产生很多中间文件和可执行文件，这些都不是代码文件，是不需要git来管理的。我们在git
+ status的时候会看到很多这样的文件，如果用git add -A来添加的话会把他们都加进去，而手动一个个添加的话也太麻烦了。这时我们就需要.gitignore了。</span></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+</div>
+<div class="section" style="padding:10px 40px 30px; border:1px solid rgb(240,240,240); font-size:14px; line-height:1.6em; font-family:微软雅黑,arial,sans-serif; margin-top:40px; word-wrap:break-word; overflow:hidden; color:rgb(2,2,2)">
+<h2 style="font-family:inherit; font-weight:inherit; line-height:1.2em; color:inherit; margin-top:20px; margin-bottom:20px; font-size:26px; padding:0px; border:0px; font-style:inherit; font-variant:inherit">
+<div class="pull-right" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; float:right">
+</div>
+Git命令</h2>
+<p class="excerpt" style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">查看、添加、提交、删除、找回，重置修改文件</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">help</span> &lt;<span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">command</span>&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 显示command的help</span>
+
+git show <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 显示某次提交的内容 git show $id</span>
+
+git co -- &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 抛弃工作区修改</span>
+
+git co . <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 抛弃工作区修改</span>
+
+git add &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将工作文件修改提交到本地暂存区</span>
+
+git add . <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将所有修改过的工作文件提交暂存区</span>
+
+git rm &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 从版本库中删除文件</span>
+
+git rm &lt;file&gt; --cached <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 从版本库中删除文件，但不删除文件</span>
+
+git reset &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 从暂存区恢复到工作文件</span>
+
+git reset -- . <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 从暂存区恢复到工作文件</span>
+
+git reset --hard <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改</span>
+
+git ci &lt;file&gt; git ci . git ci <span class="hljs-operator" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">-a</span> <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将git add, git rm和git ci等操作都合并在一起做　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　git ci -am &quot;some comments&quot;</span>
+
+git ci --amend <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 修改最后一次提交记录</span>
+
+git revert &lt;<span class="hljs-variable" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">$id</span>&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 恢复某次提交的状态，恢复动作本身也创建次提交对象</span>
+
+git revert HEAD <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 恢复最后一次提交的状态</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">查看文件diff</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git diff &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 比较当前文件和暂存区文件差异 git diff</span>
+
+git diff &lt;id1&gt;&lt;id2&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 比较两次提交之间的差异</span>
+
+git diff &lt;branch1&gt;..&lt;branch2&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 在两个分支之间比较</span>
+
+git diff --staged <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 比较暂存区和版本库差异</span>
+
+git diff --cached <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 比较暂存区和版本库差异</span>
+
+git diff --stat <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 仅仅比较统计信息</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">查看提交记录</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">log</span> git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">log</span> &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看该文件每次提交记录</span>
+
+git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">log</span> -p &lt;file&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看每次详细修改内容的diff</span>
+
+git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">log</span> -p -<span class="hljs-number" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(0,136,0)">2</span> <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看最近两次详细修改内容的diff</span>
+
+git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">log</span> --stat <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)">#查看提交统计信息</span>
+</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">tig</span><br style="">
+<span style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(255,0,0)">Mac上可以使用tig代替diff和log，brew install tig</span><br style="">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">Git 本地分支管理<br style="">
+查看、切换、创建和删除分支</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git br -r <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看远程分支</span>
+
+git br &lt;new_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 创建新的分支</span>
+
+git br -v <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看各个分支最后提交信息</span>
+
+git br --merged <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看已经被合并到当前分支的分支</span>
+
+git br --no-merged <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看尚未被合并到当前分支的分支</span>
+
+git co &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 切换到某个分支</span>
+
+git co -b &lt;new_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 创建新的分支，并且切换过去</span>
+
+git co -b &lt;new_branch&gt; &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 基于branch创建新的new_branch</span>
+
+git co <span class="hljs-variable" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">$id</span> <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 把某次历史提交记录checkout出来，但无分支信息，切换到其他分支会自动删除</span>
+
+git co <span class="hljs-variable" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">$id</span> -b &lt;new_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 把某次历史提交记录checkout出来，创建成一个分支</span>
+
+git br <span class="hljs-operator" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit">-d</span> &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 删除某个分支</span>
+
+git br -D &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 强制删除某个分支 (未被合并的分支被删除的时候需要强制)</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">&nbsp;分支合并和rebase</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git merge &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将branch分支合并到当前分支</span>
+
+git merge origin/master --no-ff <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 不要Fast-Foward合并，这样可以生成merge提交</span>
+
+git rebase master &lt;branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将master rebase到branch，相当于： git co &lt;branch&gt; &amp;&amp; git rebase master &amp;&amp; git co master &amp;&amp; git merge &lt;branch&gt;</span>
+</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">&nbsp;Git补丁管理(方便在多台机器上开发同步时用)</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git diff &gt; ../sync.patch <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 生成补丁</span>
+
+git apply ../sync.patch <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 打补丁</span>
+
+git apply --check ../sync.patch <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)">#测试补丁能否成功</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">&nbsp;Git暂存管理</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git stash <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 暂存</span>
+
+git stash list <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 列所有stash</span>
+
+git stash apply <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 恢复暂存的内容</span>
+
+git stash drop <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 删除暂存区</span>
+
+Git远程分支管理
+
+git pull <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 抓取远程仓库所有分支更新并合并到本地</span>
+
+git pull --no-ff <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 抓取远程仓库所有分支更新并合并到本地，不要快进合并</span>
+
+git fetch origin <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 抓取远程仓库更新</span>
+
+git merge origin/master <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将远程主分支合并到本地当前分支</span>
+
+git co --track origin/branch <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 跟踪某个远程分支创建相应的本地分支</span>
+
+git co -b &lt;<span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">local</span>_branch&gt; origin/&lt;remote_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 基于远程分支创建本地分支，功能同上</span>
+</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">git push # push所有分支</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git push origin master <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将本地主分支推到远程主分支</span>
+
+git push -u origin master <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)</span>
+
+git push origin &lt;<span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">local</span>_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 创建远程分支， origin是远程仓库名</span>
+
+git push origin &lt;<span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">local</span>_branch&gt;:&lt;remote_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 创建远程分支</span>
+
+git push origin :&lt;remote_branch&gt; <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)">#先删除本地分支(git br -d &lt;branch&gt;)，然后再push删除远程分支</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">Git远程仓库管理</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git remote -v <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看远程服务器地址和仓库名称</span>
+
+git remote show origin <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 查看远程服务器仓库状态</span>
+
+git remote add origin git@ github:robbin/robbin_site.git <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 添加远程仓库地址</span>
+
+git remote <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">set</span>-url origin git@ github.com:robbin/robbin_site.git <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 设置远程仓库地址(用于修改远程仓库地址) git remote rm &lt;repository&gt; # 删除远程仓库</span>
+</code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">创建远程仓库</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">clone</span> --bare robbin_site robbin_site.git <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 用带版本的项目创建纯版本仓库</span>
+
+scp -r my_project.git git@ git.csdn.net:~ <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 将纯仓库上传到服务器上</span>
+
+mkdir robbin_site.git &amp;&amp; <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">cd</span> robbin_site.git &amp;&amp; git --bare init <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 在服务器创建纯仓库</span>
+
+git remote add origin git@ github.com:robbin/robbin_site.git <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 设置远程仓库地址</span>
+
+git push -u origin master <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 客户端首次提交</span>
+
+git push -u origin develop <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 首次将本地develop分支提交到远程develop分支，并且track</span>
+
+git remote <span class="hljs-built_in" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:bold; font-size:undefined; line-height:inherit; font-family:inherit">set</span>-head origin master <span class="hljs-comment" style="padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:inherit; font-family:inherit; color:rgb(136,136,136)"># 设置远程仓库的HEAD指向master分支</span></code></pre>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size:undefined; line-height:1.6em; font-family:inherit">
+<br style="">
+<br style="">
+<br style="">
+<span style="font-weight:inherit; padding:0px; border:0px; font-style:inherit; font-variant:inherit; font-size:undefined; line-height:inherit; font-family:inherit">也可以命令设置跟踪远程库和本地库</span></p>
+<pre style="overflow:auto; font-family:inherit; font-size:undefined; padding:0px; margin-top:0px; margin-bottom:10px; line-height:inherit; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; background-color:rgb(245,245,245)"><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git branch --set-upstream master origin/master
+
+</code><p><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">git branch --set-upstream develop origin/develop</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">
+</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">
+</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">此文章属转载，原文地址：http://1ke.co/course/194</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">
+</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)">另附：</code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)"> 解决  <span style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px">在使用git 对源代码进行push到gitHub时可能会出错，error: failed to push some refs to git。</span></code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)"><span style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px">出现错误的主要原因是github中的README.md文件不在本地代码目录中</span></code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)"><span style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px">可以通过如下命令进行github与本地代码合并:  git pull --rebase origin master</span></code><code class="language-bash hljs" style="font-family:inherit; font-size:undefined; padding:0.5em; color:black; border:0px; font-style:inherit; font-variant:inherit; font-weight:inherit; line-height:inherit; white-space:pre-wrap; display:block; overflow-x:auto; background:rgb(240,240,240)"><span style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px">重新执行之前的git push 命令，成功！</span><br style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px"><br style="color:rgb(20,25,30); font-family:&quot;PingFang SC&quot;,Helvetica,&quot;Helvetica Neue&quot;,微软雅黑,Tahoma,Arial,sans-serif; font-size:14px; line-height:21px">
+</code></p></pre>
+</div>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="51917557" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>4</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/llf369477769/article/details/51837546';">上一篇</span><a href="/llf369477769/article/details/51837546" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">分享如何使用PHP将URL地址参数进行加密传输提高网站安全性</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/llf369477769/article/details/52983329';">下一篇</span><a href="/llf369477769/article/details/52983329" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">linux下终端命令快捷键</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36"  style="max-height:195px;">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/qq_31628285/article/details/72674634" title="Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/manyu888888/article/details/51898217" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011225629/article/details/50915919" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/xiao19911130/article/details/48574801" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011473614/article/details/50462086" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u012607848/article/details/46343267" title="使用Git上传本地项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">使用Git上传本地项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/liu_jun_y/article/details/25743687" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011506413/article/details/51389570" title="如何使用Git上传项目代码到github 此博文包含图片" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github 此博文包含图片</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/k678mh/article/details/12307063" title="如何使用Git上传项目代码到github" strategy="recommend_sim_0" target="_blank" style="width: 290px;">如何使用Git上传项目代码到github</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://soledede.iteye.com/blog/1981737" title="git学习——上传项目代码到github(转)" strategy="recommend_sim_0" target="_blank" style="width: 290px;">git学习——上传项目代码到github(转)</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+            <script> 
+                (function() { 
+                    var s = "_" + Math.random().toString(36).slice(2); 
+                    document.write('<div id="' + s + '"></div>'); 
+                    (window.slotbydup=window.slotbydup || []).push({ 
+                        id: '4228013', 
+                        container: s, 
+                        size: '0,0', 
+                        display: 'inlay-fix' 
+                    }); 
+                })(); 
+            </script>
+    </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/llf369477769/svc/GetSuggestContent/51917557",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ 
+<div id="relate" data-mod="popu_218"  class="tracking-ad">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl tracking-ad" id="res-relatived" data-mod="popu_84"  > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+    
+    <div id="adCollege"> 
+    </div>  
+
+    
+
+     <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+     <script type="text/javascript">
+         csdn.position.showEdu({
+             sourceType: "blog",
+             searchType: "detail",
+             searchKey: "51917557",
+                username: "",
+                recordcount: "10",
+                containerId: "adCollege" //容器DIV的id。 
+            });  
+        </script> 
+   
+</dl>
+
+
+
+
+
+    <div id="ad_cen">        
+                <div>
+                                    <div class="tracking-ad" data-view="true" data-mod="ad_popu_199" data-mtp="43" data-order="114" data-con="ad_content_1843" style="width: 960px; height: 90px;">
+                                             <script type="text/javascript">
+                                                 /*博客内容页下方Banner2-960*90，创建于,2016-11-28*/
+                                                 var cpro_id = "u2831143";
+                                            </script>
+                                            <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+                                   </div>
+                    </div>
+    </div>  
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+<div class="tracking-ad" data-view="true" data-mod="ad_popu_72" data-mtp="62" data-order="40" data-con="ad_content_2072">
+                 <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer"  type="text/javascript"></script>
+            <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	            <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"></div></div>
+            <script>  document.getElementById("popuLayer_js_q").onload=function(){      var styObjd=styObj={width:"300px","height":parseInt(250)+28};window.CSDN.Layer.PopuLayer("#layerd",{storageName:"layerd",styleObj:styObjd,total:50,expoire:1000*60});  }</script><!-- 投放代码 --><script type="text/javascript">                /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({        id: "u2895327"      });  </script>  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+     
+</div>
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '51917557';
+    var commentscount = 0;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/llf369477769/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='如何使用Git上传项目代码到github';
+
+</script>
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/llf369477769" target="_blank">
+    <img src="http://avatar.csdn.net/D/B/2/1_llf369477769.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/llf369477769" class="user_name" target="_blank">llf369477769</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=llf369477769','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>10308次</span></li>
+    <li>积分：<span>129</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog2.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：129 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>1篇</span></li>
+    <li>转载：<span>8篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>1条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/llf369477769/article/category/6298800" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">web后端</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/llf369477769/article/month/2016/11">2016年11月</a><span>(4)</span></li><li><a href="/llf369477769/article/month/2016/10">2016年10月</a><span>(1)</span></li><li><a href="/llf369477769/article/month/2016/07">2016年07月</a><span>(2)</span></li><li><a href="/llf369477769/article/month/2016/05">2016年05月</a><span>(2)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/llf369477769/article/details/51917557" title="如何使用Git上传项目代码到github">如何使用Git上传项目代码到github</a><span>(5230)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51837546" title="分享如何使用PHP将URL地址参数进行加密传输提高网站安全性">分享如何使用PHP将URL地址参数进行加密传输提高网站安全性</a><span>(4390)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51454107" title="nginx服务器安装及配置文件详解（转载）">nginx服务器安装及配置文件详解（转载）</a><span>(158)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51395180" title="记录Linux一些常用操作命令">记录Linux一些常用操作命令</a><span>(91)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53021763" title="Centos下nginx，php，mysql以及phpmyadmin的配置">Centos下nginx，php，mysql以及phpmyadmin的配置</a><span>(85)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/52983329" title="linux下终端命令快捷键">linux下终端命令快捷键</a><span>(58)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53021684" title="CentOS编译安装LNMP环境（转载）">CentOS编译安装LNMP环境（转载）</a><span>(45)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/52994105" title="linux下vi命令大全(转载)">linux下vi命令大全(转载)</a><span>(44)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53114451" title="vps搭建(转载)">vps搭建(转载)</a><span>(40)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/llf369477769/article/details/51837546" title="分享如何使用PHP将URL地址参数进行加密传输提高网站安全性">分享如何使用PHP将URL地址参数进行加密传输提高网站安全性</a><span>(1)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51395180" title="记录Linux一些常用操作命令">记录Linux一些常用操作命令</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51454107" title="nginx服务器安装及配置文件详解（转载）">nginx服务器安装及配置文件详解（转载）</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/51917557" title="如何使用Git上传项目代码到github">如何使用Git上传项目代码到github</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/52983329" title="linux下终端命令快捷键">linux下终端命令快捷键</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/52994105" title="linux下vi命令大全(转载)">linux下vi命令大全(转载)</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53021684" title="CentOS编译安装LNMP环境（转载）">CentOS编译安装LNMP环境（转载）</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53021763" title="Centos下nginx，php，mysql以及phpmyadmin的配置">Centos下nginx，php，mysql以及phpmyadmin的配置</a><span>(0)</span>
+</li>
+<li>
+<a href="/llf369477769/article/details/53114451" title="vps搭建(转载)">vps搭建(转载)</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/turingbooks/article/details/72416875" target="_blank">* 5月书讯：流畅的Python，终于等到你！</a></li>
+<li><a href="http://blog.csdn.net/kimmking/article/details/72886230" 
+target="_blank">* JSON最佳实践</a></li>
+<li><a href="http://blog.csdn.net/swingwang/article/details/72887367"target="_blank">* InfiniBand技术和协议架构分析</a></li>
+<li><a href="http://blog.csdn.net/jiangwei0910410003/article/details/72675977" 
+target="_blank">* Android 中解决破解签名验证之后导致的登录授权失效问题</a></li>
+<li><a href="http://blog.csdn.net/poem_qianmo/article/details/72857602" 
+target="_blank">* 《Real-Time Rendering 3rd》 提炼总结——图形渲染与视觉外观</a></li>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/72903038" 
+target="_blank">* CSDN日报20170607 ——《别混淆你想要什么和能否实现》</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/llf369477769/article/details/51837546#comments">分享如何使用PHP将URL地址参数进行加密传输提高网站安全性</a>
+    <p style="margin:0px;"><a href="/qq_24038207" class="user_name">qq_24038207</a>:
+你好，请问action=&quot;?&quot; 是什么意思？提交表单后，如何跳转到接受数据的页面？
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                 <!-- 广告位开始 --> 
+                <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true" data-mod="ad_popu_189" data-mtp="63" data-order="40" data-con="ad_content_1259" style="width: 250px; height: 250px;">
+                        <div id="nav_show_top_stop" style="width: 250px;height: 250px;z-index:1000"><div id="cpro_u2734133"></div></div>
+                   </div>
+                    <script>    
+                        
+                        setTimeout(function () {
+                            var naviga_offsetTop = 0; function naviga_stay_top() {
+                                var scrollTop = jQuery(document).scrollTop();
+                                if (scrollTop > naviga_offsetTop) {
+                                    jQuery("#nav_show_top_stop").css({ "position": "fixed" });
+                                    jQuery("#nav_show_top_stop").css({ "top": "0px" });
+                                } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); }
+                            }
+                            function onload_function() {
+                                naviga_offsetTop = jQuery("#nav_show_top_stop").position().top;
+                                jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top);
+                                jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top);
+                            } jQuery(document).ready(onload_function);
+                        },200);                                   
+
+                    </script>
+                    <script type="text/javascript">    (window.cproArray = window.cproArray || []).push({ id: "u2734133" });  </script>
+                   <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+        <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170606001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=5655789"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+           
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            },500);
+
+        </script>
+
+</body>
+</html>   
+ 

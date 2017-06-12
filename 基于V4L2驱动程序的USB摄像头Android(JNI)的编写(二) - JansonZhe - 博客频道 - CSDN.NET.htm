@@ -1,0 +1,1325 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+
+            <link rel="canonical" href="http://blog.csdn.net/jansonzhe/article/details/47334671"/> 
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+       
+    <title>基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二) - JansonZhe
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="在我的上一篇文章基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)中，我详细介绍了如何配置V4L2驱动程序的采集环境，那么在这篇文章中，我将详细分析V4L2采集视频的过程。一、向驱动程序申请缓冲帧 缓冲帧，顾名思义就是在Linux驱动程序中用于临时存放数据的“容器”，在V4L2驱动程序中，也就是存放我们的视频流数据。而什么又是向驱动程序申请缓冲帧呢，因为在V4L2驱动程序中，其" />
+
+    <meta name="keywords" content="V4L2,摄像头,android" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+                      <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/ink/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/JansonZhe/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>
+       
+
+
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/jansonzhe">JansonZhe</a></h2>
+            <h3>行者无疆，爱无涯</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/jansonzhe?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/jansonzhe?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/jansonzhe/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "JansonZhe";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/jansonzhe";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://bss.csdn.net/m/topic/community_IoT/index">
+<font color=red><strong>【CSDN 技术主题月】物联网全栈开发</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href=" http://blog.csdn.net/broadview2006/article/details/72901572">
+<font color=blue><strong>【评论送书】每周荐书：JVM、Nginx、小程序</strong></font></a>
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/73104893">
+<font color=red><strong>CSDN日报20170612 ——《程序员，感觉技术停滞了怎么办？》</strong></font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=%e5%9f%ba%e4%ba%8eV4L2%e9%a9%b1%e5%8a%a8%e7%a8%8b%e5%ba%8f%e7%9a%84USB%e6%91%84%e5%83%8f%e5%a4%b4Android(JNI)%e7%9a%84%e7%bc%96%e5%86%99(%e4%ba%8c)&u=http://blog.csdn.net/jansonzhe/article/details/47334671"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/jansonzhe/article/details/47334671">
+        基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/V4L2' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">V4L2</a><a href='http://www.csdn.net/tag/%e6%91%84%e5%83%8f%e5%a4%b4' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">摄像头</a><a href='http://www.csdn.net/tag/android' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">android</a><a href='http://www.csdn.net/tag/linux%e9%a9%b1%e5%8a%a8' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">linux驱动</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2015-08-07 09:52</span>
+            <span class="link_view" title="阅读次数">1491人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(2)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('%e5%9f%ba%e4%ba%8eV4L2%e9%a9%b1%e5%8a%a8%e7%a8%8b%e5%ba%8f%e7%9a%84USB%e6%91%84%e5%83%8f%e5%a4%b4Android(JNI)%e7%9a%84%e7%bc%96%e5%86%99(%e4%ba%8c)','47334671');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(47334671,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('5714685','JansonZhe','top','47334671');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">linux驱动<em>（9）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/JansonZhe/article/category/5714685"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_5714685">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label  onclick="GetCategoryArticles('5708917','JansonZhe','top','47334671');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">android平台<em>（5）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/JansonZhe/article/category/5708917"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_5708917">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+        <div class="markdown_views"><p>在我的上一篇文章<a href="http://blog.csdn.net/jansonzhe/article/details/47319727">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>中，我详细介绍了如何配置V4L2驱动程序的采集环境，那么在这篇文章中，我将详细分析V4L2采集视频的过程。</p>
+
+<p><strong>一、向驱动程序申请缓冲帧</strong> <br>
+缓冲帧，顾名思义就是在Linux驱动程序中用于临时存放数据的“容器”，在V4L2驱动程序中，也就是存放我们的视频流数据。而什么又是向驱动程序申请缓冲帧呢，因为在V4L2驱动程序中，其配备的缓冲帧的个数并不是固定的，每一次我们使用的时候都要根据我们的需求向V4L2驱动程序申请，这也体现了V4L2的强大以及设计的合理性，保证了不必要的资源浪费。下面介绍如何向V4L2驱动程序申请缓冲帧。 <br>
+使用命令：<strong>VIDIOC_REQBUFS</strong></p>
+
+
+
+<pre class="prettyprint"><code class=" hljs objectivec">    <span class="hljs-keyword">struct</span> v4l2_requestbuffers req;
+    <span class="hljs-comment">//设定v4l2_requestbuffers的参数信息</span>
+    CLEAR (req);
+    req<span class="hljs-variable">.count</span>               = <span class="hljs-number">4</span>; <span class="hljs-comment">//缓存数量</span>
+    req<span class="hljs-variable">.type</span>                = V4L2_BUF_TYPE_VIDEO_CAPTURE; <span class="hljs-comment">//数据流类型，这个参数不能改变</span>
+    req<span class="hljs-variable">.memory</span>              = V4L2_MEMORY_MMAP;<span class="hljs-comment">//使用内存映射方式。</span>
+    <span class="hljs-comment">//申请缓冲数，使用VIDIOC_REQBUFS，注意上面的req.count虽然赋值为4，但是并不一定申请之后，得到的缓冲数也为4</span>
+    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_REQBUFS, &amp;req)) {
+        <span class="hljs-keyword">if</span> (EINVAL == errno) {
+            LOGE(<span class="hljs-string">"%s does not support memory mapping"</span>, dev_name);
+            <span class="hljs-keyword">return</span> ERROR_LOCAL;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_REQBUFS"</span>);
+        }
+    }
+    <span class="hljs-comment">//如果申请得到的缓冲4小于2的话，则表示没有充分的内存（内核空间，具有实际的物理内存）</span>
+    <span class="hljs-keyword">if</span> (req<span class="hljs-variable">.count</span> &lt; <span class="hljs-number">2</span>) {
+        LOGE(<span class="hljs-string">"Insufficient buffer memory on %s"</span>, dev_name);
+        <span class="hljs-keyword">return</span> ERROR_LOCAL;
+    }
+    <span class="hljs-comment">//定义buffer类型结构体</span>
+    <span class="hljs-keyword">struct</span> buffer {
+        <span class="hljs-keyword">void</span> *                  start;
+        size_t                  length;
+    };
+    <span class="hljs-comment">//定义buffer类型的结构体指针</span>
+    <span class="hljs-keyword">struct</span> buffer *         buffers         = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-comment">//根据申请到的缓存数，在用户空间也分配req.count个buffer指针用于存放内核空间的映射。</span>
+    buffers = calloc (req<span class="hljs-variable">.count</span>, <span class="hljs-keyword">sizeof</span> (*buffers));</code></pre>
+
+<p>对于上面的程序，我想着重介绍的是v4l2_requestbuffers结构体，该结构体定义了一些设置缓冲帧的信息，其完整的结构体定义如下：</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs fsharp"><span class="hljs-keyword">struct</span> v4l2_requestbuffers
+{
+    __u32   count   <span class="hljs-comment">//申请缓冲帧的数量</span>
+    __u32   <span class="hljs-class"><span class="hljs-keyword">type</span>    //数据流类型，这个参数一般是固定的 </span>
+    __u32   memory  <span class="hljs-comment">//采用内存的映射方式</span>
+    __u32   reserved[<span class="hljs-number">2</span>] <span class="hljs-comment">//保留数据，一般不用。</span>
+}
+</code></pre>
+
+<p>在程序中，我们为什么还要在用户空间里面定义一个buffer类型的结构体指针呢，并且申请的指针数量和内核空间里面定义的缓冲帧数一样，这是应用了我们Linux内核映射的一种方法。采用的内存映射的原因是因为由于视频流数据比较大，如果我们还采用以往的那种copy_from_user或者copy_to_user的方式的话，那么这样不仅耗费内核空间的额内存，而且还耗费用户空间的内存，同时还大大降低了驱动程序的性能。而采用内存映射的话，只要我们在用户空间将内存空间缓冲帧的物理地址映射到我们的用户空间就可以了，这样在用户空间我们就直接使用内核缓冲帧的数据就可以了。</p>
+
+<p><strong>二、将缓冲帧映射到用户空间</strong> <br>
+上一步中，我们已经在内核空间中申请了缓冲帧，同时还在用户空间中定义了相等数量的缓冲帧指针，那么这一步我们当然就要完成将内核中的缓冲帧映射到用户空间的工作啦。 <br>
+这一步中，首先我们要使用VIDIOC_QUERYBUF命令获取缓冲帧的相关信息。然后获取之后，我们再对每一个缓冲帧进行逐一映射。主要代码如下：</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs rsl">    <span class="hljs-keyword">for</span> (n_buffers = <span class="hljs-number">0</span>; n_buffers &lt; req.count; ++n_buffers) {
+
+        struct v4l2_buffer buf;
+        CLEAR (buf);
+        <span class="hljs-comment">//初始化一下v4l2_buffer</span>
+        buf.type        = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        buf.memory      = V4L2_MEMORY_MMAP;
+        <span class="hljs-comment">//完成对内核缓冲帧的编号，使之与用户空间的缓冲帧指针对应。</span>
+        buf.index       = n_buffers;
+        <span class="hljs-comment">//获取缓存buf的地址以及其他信息。</span>
+        <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_QUERYBUF, &amp;buf))
+            <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_QUERYBUF"</span>);
+
+        buffers[n_buffers].<span class="hljs-built_in">length</span> = buf.<span class="hljs-built_in">length</span>;
+        buffers[n_buffers].start =
+        mmap (NULL ,
+            buf.<span class="hljs-built_in">length</span>,
+            PROT_READ | PROT_WRITE,
+            MAP_SHARED,
+            fd, buf.m.offset);
+        <span class="hljs-comment">//mmap系统调用的最终目的是将,设备或文件映射到用户进程的虚拟地址空间,实现用户进程对文件的直接读写</span>
+        <span class="hljs-keyword">if</span> (MAP_FAILED == buffers[n_buffers].start) <span class="hljs-comment">//如果映射失败</span>
+            <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"mmap"</span>);
+    }</code></pre>
+
+<p>这一步中我们还使用了一个非常重要的结构体<a href="http://linuxtv.org/downloads/v4l-dvb-apis/buffer.html">v4l2_buffer</a>，关于此结构体的介绍可以查看官方文档。现在我们的初始化工作，到这里也就基本结束了。下一步将开始捕获视频流数据。</p>
+
+<p><strong>三、捕获视频流</strong>  <br>
+捕获视频流主要分两个步骤进行，第一步是将我们在内核空间申请的缓冲帧逐一放入接收视频流数据的队列当中，采用的命令是：<strong>VIDIOC_QBUF</strong>，第二步是开启捕获视频数据，采用的命令是：<strong>VIDIOC_STREAMON</strong>，一般在写代码的时候，会将这两部分写在一起。</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs fsharp">    unsigned int i;
+    enum v4l2_buf_type <span class="hljs-class"><span class="hljs-keyword">type</span>;</span>
+    <span class="hljs-comment">//只有在捕获视频流之前，应该要将buf放入队列，这样只要队列里面有buf，设备才将数据放入到buf中，其中将buf放入队列的函数是VIDIOC_QBUF</span>
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; n_buffers; ++i) {
+
+        <span class="hljs-keyword">struct</span> v4l2_buffer buf;
+        CLEAR (buf);
+        buf.<span class="hljs-keyword">type</span>        = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        buf.memory      = V4L2_MEMORY_MMAP; <span class="hljs-comment">//这里选择的是mmap的形式，即内存映射方式。</span>
+        <span class="hljs-comment">//将带有编号的缓冲帧放入接收视频数据队列。</span>
+        <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_QBUF, &amp;buf))
+            <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_QBUF"</span>);
+    }
+
+    <span class="hljs-class"><span class="hljs-keyword">type</span> =</span> V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    <span class="hljs-comment">//开启捕获视频数据</span>
+    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_STREAMON, &amp;<span class="hljs-class"><span class="hljs-keyword">type</span>))</span>
+        <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_STREAMON"</span>);
+
+    <span class="hljs-keyword">return</span> SUCCESS_LOCAL;
+</code></pre>
+
+<p><strong>四、读取缓冲帧数据</strong> <br>
+经过上面一步，这个时候应该视频流数据被逐一捕获并放入在接收数据队列的缓冲帧当中了，现在我们的主要工作就是要从接收队列的缓冲帧当中一帧帧读取出数据，然后将读取的数据进行处理。当然读取完了之后，我们还要重新将缓冲帧放入接收数据的队列当中。读取数据使用的命令是：<strong>VIDIOC_DQBUF</strong>，将缓冲帧放入接收数据队列的还是我们上一步使用的命令：<strong>VIDIOC_QBUF</strong>。</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs d">    <span class="hljs-keyword">struct</span> v4l2_buffer buf;
+    unsigned <span class="hljs-keyword">int</span> i;
+    <span class="hljs-comment">//读取缓存，即出队列</span>
+    CLEAR (buf);
+    buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    buf.memory = V4L2_MEMORY_MMAP;
+    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_DQBUF, &amp;buf)) {
+        <span class="hljs-keyword">switch</span> (errno) {
+            <span class="hljs-keyword">case</span> EAGAIN:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">case</span> EIO:
+            <span class="hljs-keyword">default</span>:
+                <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_DQBUF"</span>);
+        }
+    }
+    <span class="hljs-comment">//一个条件判断语句，如果判断不成功，则结束程序。此时的n_buffers已经是4了</span>
+    <span class="hljs-keyword">assert</span> (buf.index &lt; n_buffers); 
+    <span class="hljs-comment">//将读出的缓存进行处理，将数据起始地址作为参数，传递给处理函数</span>
+    processimage (buffers[buf.index].start);
+    <span class="hljs-comment">//重新放入缓存队列，这一步是必须的，因为有时候你并不知道是否是属于输出设备还是输入设备</span>
+    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == xioctl (fd, VIDIOC_QBUF, &amp;buf))
+    <span class="hljs-keyword">return</span> errnoexit (<span class="hljs-string">"VIDIOC_QBUF"</span>);</code></pre>
+
+<p>整个视频流数据的接收过程可以用下面的图表示</p>
+
+<p><img src="http://img.blog.csdn.net/20150807110919130" alt="V4L2接收数据示意图" title=""></p>
+
+<p>程序中的processimage函数是用于处理视频流数据的。由于我们在<a href="http://blog.csdn.net/jansonzhe/article/details/47319727">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>中的设置采集视频帧的格式、宽、高、大小这一步中，将采集的视频流数据的储存格式设置为YUYV格式，因此在我们的processimage函数中将对此进行处理。</p></div>
+        <script  type="text/javascript">
+            $(function () {
+                $('pre.prettyprint code').each(function () {
+                    var lines = $(this).text().split('\n').length;
+                    var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                    $(this).addClass('has-numbering').parent().append($numbering);
+                    for (i = 1; i <= lines; i++) {
+                        $numbering.append($('<li/>').text(i));
+                    };
+                    $numbering.fadeIn(1700);
+                });
+            });
+        </script>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+    
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="47334671" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/jansonzhe/article/details/47319727';">上一篇</span><a href="/jansonzhe/article/details/47319727" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/jansonzhe/article/details/47341383';">下一篇</span><a href="/jansonzhe/article/details/47341383" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Linux内核：通过wait_event和wake_up内在机制分析等待队列</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36"  style="max-height:195px;">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/JansonZhe/article/details/47416305" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)" strategy="" target="_blank" style="width: 290px;">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/JansonZhe/article/details/47319727" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)" strategy="" target="_blank" style="width: 290px;">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/YLH9604/article/details/51704503" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写" strategy="" target="_blank" style="width: 290px;">基于V4L2驱动程序的USB摄像头Android(JNI)的编写</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/hktkfly6/article/details/53965936" title="jmq_0000的专栏，有Android驱动的部分" strategy="" target="_blank" style="width: 290px;">jmq_0000的专栏，有Android驱动的部分</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/shui1025701856/article/details/7467067" title="android camera HAL" strategy="" target="_blank" style="width: 290px;">android camera HAL</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zhimibuhui188/article/details/8209221" title="android camera HAL" strategy="" target="_blank" style="width: 290px;">android camera HAL</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/qinjinghua2012/article/details/42979919" title="利用V4L2编写的USB摄像头程序1【经OK6410验证成功】" strategy="" target="_blank" style="width: 290px;">利用V4L2编写的USB摄像头程序1【经OK6410验证成功】</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/qinjinghua2012/article/details/43006901" title="利用V4L2编写的USB摄像头程序2【经OK6410验证成功】" strategy="" target="_blank" style="width: 290px;">利用V4L2编写的USB摄像头程序2【经OK6410验证成功】</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/surui_555/article/details/41516739" title="基于V4L2框架的linux驱动程序编写" strategy="" target="_blank" style="width: 290px;">基于V4L2框架的linux驱动程序编写</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+    <div>
+        
+
+        <script type="text/javascript">
+            /*博客内容页下方Banner1-728*90，创建于2016-12-13*/
+            var cpro_id = "u2843949";
+        </script>
+        <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+
+     </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/JansonZhe/svc/GetSuggestContent/47334671",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ 
+
+ 
+
+<dl class="blog-ass-articl tracking-ad" id="res-relatived" data-mod="popu_84"  > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+    
+    <div id="adCollege"> 
+    </div>  
+
+    
+
+     <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+     <script type="text/javascript">
+         csdn.position.showEdu({
+             sourceType: "blog",
+             searchType: "detail",
+             searchKey: "47334671",
+                username: "",
+                recordcount: "10",
+                containerId: "adCollege" //容器DIV的id。 
+            });  
+        </script> 
+   
+</dl>
+
+
+
+
+
+    <div id="ad_cen">        
+                <div>
+                              <script type="text/javascript">
+                                  /*博客内容页下方Banner-728*90，创建于2014-7-3*/
+                                  var cpro_id = "u1607657";
+                                            </script>
+                              <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+                    </div>
+    </div>  
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+<div class="tracking-ad" data-view="true" data-mod="ad_popu_72" data-mtp="62" data-order="40" data-con="ad_content_2072">
+                 <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer"  type="text/javascript"></script>
+            <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	            <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"></div></div>
+            <script>  document.getElementById("popuLayer_js_q").onload=function(){      var styObjd=styObj={width:"300px","height":parseInt(250)+28};window.CSDN.Layer.PopuLayer("#layerd",{storageName:"layerd",styleObj:styObjd,total:50,expoire:1000*60});  }</script><!-- 投放代码 --><script type="text/javascript">                /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({        id: "u2895327"      });  </script>  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+     
+</div>
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '47334671';
+    var commentscount = 2;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)';
+
+</script>
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/JansonZhe" target="_blank">
+    <img src="http://avatar.csdn.net/5/9/D/1_jansonzhe.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/JansonZhe" class="user_name" target="_blank">JansonZhe</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=JansonZhe','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+                                            <a  target="_blank">
+                                                    <img src="http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/chizhiyiheng.png" onmouseover="m_over_m(this,4)" onmouseout="m_out_m()" alt="1" >
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>16226次</span></li>
+    <li>积分：<span>368</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog2.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：368 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>15篇</span></li>
+    <li>转载：<span>0篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>14条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/JansonZhe/article/category/5708917" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">android平台</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/JansonZhe/article/category/5714685" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux驱动</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="/JansonZhe/article/category/5717717" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux内核</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/JansonZhe/article/category/5720811" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">c语言</a><span>(6)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/JansonZhe/article/month/2016/01">2016年01月</a><span>(1)</span></li><li><a href="/JansonZhe/article/month/2015/10">2015年10月</a><span>(1)</span></li><li><a href="/JansonZhe/article/month/2015/09">2015年09月</a><span>(4)</span></li><li><a href="/JansonZhe/article/month/2015/08">2015年08月</a><span>(10)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/jansonzhe/article/details/47319727" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a><span>(2530)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47341383" title="Linux内核：通过wait_event和wake_up内在机制分析等待队列">Linux内核：通过wait_event和wake_up内在机制分析等待队列</a><span>(1650)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47334671" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)</a><span>(1485)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/48576025" title="Linux内核：poll机制">Linux内核：poll机制</a><span>(1199)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47272501" title="关于Android的HAL的一些理解">关于Android的HAL的一些理解</a><span>(1149)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47809357" title="Linux内核：进程基础之进程ID与管理">Linux内核：进程基础之进程ID与管理</a><span>(1132)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/50555644" title="Linux字符设备驱动和杂项设备驱动对比">Linux字符设备驱动和杂项设备驱动对比</a><span>(1066)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47416305" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)</a><span>(1056)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47344163" title="如何使自己编译的驱动程序具有读写权限">如何使自己编译的驱动程序具有读写权限</a><span>(1007)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/48651503" title="编写JNI的两种应用层与JNI层方法映射方式">编写JNI的两种应用层与JNI层方法映射方式</a><span>(659)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/jansonzhe/article/details/47319727" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a><span>(10)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47809357" title="Linux内核：进程基础之进程ID与管理">Linux内核：进程基础之进程ID与管理</a><span>(2)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47334671" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)</a><span>(2)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/50555644" title="Linux字符设备驱动和杂项设备驱动对比">Linux字符设备驱动和杂项设备驱动对比</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47416305" title="基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(三)</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47373369" title="C语言：数组指针、指针数组、指针的指针、函数指针">C语言：数组指针、指针数组、指针的指针、函数指针</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47344163" title="如何使自己编译的驱动程序具有读写权限">如何使自己编译的驱动程序具有读写权限</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47343637" title="Linux内核：container_of宏分析">Linux内核：container_of宏分析</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47341383" title="Linux内核：通过wait_event和wake_up内在机制分析等待队列">Linux内核：通过wait_event和wake_up内在机制分析等待队列</a><span>(0)</span>
+</li>
+<li>
+<a href="/jansonzhe/article/details/47313211" title="关于Android.mk和build/envsetup.sh的一些小小理解">关于Android.mk和build/envsetup.sh的一些小小理解</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/turingbooks/article/details/72416875" target="_blank">* 5月书讯：流畅的Python，终于等到你！</a></li>
+<li><a href="http://blog.csdn.net/kimmking/article/details/72886230" 
+target="_blank">* JSON最佳实践</a></li>
+<li><a href="http://blog.csdn.net/swingwang/article/details/72887367"target="_blank">* InfiniBand技术和协议架构分析</a></li>
+<li><a href="http://blog.csdn.net/jiangwei0910410003/article/details/72675977" 
+target="_blank">* Android 中解决破解签名验证之后导致的登录授权失效问题</a></li>
+<li><a href="http://blog.csdn.net/poem_qianmo/article/details/72857602" 
+target="_blank">* 《Real-Time Rendering 3rd》 提炼总结——图形渲染与视觉外观</a></li>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/72903038" 
+target="_blank">* CSDN日报20170607 ——《别混淆你想要什么和能否实现》</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/jansonzhe/article/details/47809357#comments">Linux内核：进程基础之进程ID与管理</a>
+    <p style="margin:0px;"><a href="/x727847140" class="user_name">x727847140</a>:
+发现你上面的PID管理图有问题， pid结构体中的 task一项 应该是箭头指向task_struc...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47809357#comments">Linux内核：进程基础之进程ID与管理</a>
+    <p style="margin:0px;"><a href="/x727847140" class="user_name">x727847140</a>:
+不错，学习了，讲的比深入linux内核架构清晰点。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47334671#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(二)</a>
+    <p style="margin:0px;"><a href="/qq_31925445" class="user_name">qq_31925445</a>:
+大神，小弟不才，我是搞app，能否发一份源码给我，生当陨首，死当结草，1310877006@qq.c...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/u012557643" class="user_name">u012557643</a>:
+我用android手机连接USB Camera之后，可以通过UsbManager的getDevice...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/u012557643" class="user_name">u012557643</a>:
+我用android手机连接USB Camera之后，可以通过UsbManager的getDevice...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/gdragon88" class="user_name">gdragon88</a>:
+如何确定usb的设备文件 我手机连电脑 ，那usb摄像头就不能连手机了  那怎么知道生成的是那个节点
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/gdragon88" class="user_name">gdragon88</a>:
+手机要刷机吗？ http://www.eoeandroid.com/forum.php?mod=vi...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/JansonZhe" class="user_name">JansonZhe</a>:
+@u013181141:手机上的集成摄像头也是基于V4L2驱动的，但是要获取手机集成的驱动设备节点，...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/u013181141" class="user_name">u013181141</a>:
+请问，可以用这种方式打开手机上面的集成摄像，并取得一张图片，保存到本地吗？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jansonzhe/article/details/47319727#comments">基于V4L2驱动程序的USB摄像头Android(JNI)的编写(一)</a>
+    <p style="margin:0px;"><a href="/JansonZhe" class="user_name">JansonZhe</a>:
+@toshiba689:是的！
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 -->                    <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true"  data-mtp="63" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 200px;">
+                         <div id="nav_show_top_stop" style="width: 200px;height: 200px;z-index:1000"><div id="cpro_u2734128"></div></div>
+                   </div>
+    <script type="text/javascript">    
+        setTimeout(function () {
+            var naviga_offsetTop = 0;
+            function naviga_stay_top() { var scrollTop = jQuery(document).scrollTop(); if (scrollTop > naviga_offsetTop) { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": "0px" }); } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); } }
+            function onload_function() { naviga_offsetTop = jQuery("#nav_show_top_stop").position().top; jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top); jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top); } jQuery(document).ready(onload_function);
+               
+        }, 200);    
+    </script>
+<script type="text/javascript">(window.cproArray = window.cproArray || []).push({ id: "u2734128" });  </script> 
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script> 
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+        <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170606001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=5142647"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+           
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            },500);
+
+        </script>
+
+</body>
+</html>   
+ 
